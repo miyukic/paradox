@@ -1,10 +1,22 @@
-#保存ファイル名
-[string]$SaveImageFile = 'ImageFile.png'
+Set-StrictMode -Version Latest
+
+#基本保存ファイル名
+[string]$BaseFileName = 'ImageFile'
+#保存ファイルの拡張子
+[string]$filetype = "png"
 [string]$CurrentDir = Convert-Path .
 [string]$DesktopPath = [System.Environment]::GetFolderPath("Desktop")
 
 if ($CurrentDir -match "^C:\\Program[ \t]Files\\PowerShell\\[0-9]+") {
     $CurrentDir = $DesktopPath
+}
+
+function Hoge([int]$f) {
+    if ($f -eq 1) {
+        return 1
+    }
+    Write-Host($f)
+    return Hoge($f - 1)
 }
 
 function SaveImage([string]$path, [string]$fileName) {
@@ -15,7 +27,7 @@ function SaveImage([string]$path, [string]$fileName) {
         Add-Type -AssemblyName System.Windows.Forms
         $clip = [Windows.Forms.Clipboard]::GetImage()
         if ($null -ne $clip) {
-            $clip.Save($path + "\" + $fileName)
+            $clip.Save($path+"\"+$fileName)
         }
     }
 }
@@ -25,26 +37,25 @@ function SaveImage([string]$path, [string]$fileName) {
 #}
 
 # ファイル名が存在するならサフィックスを2番からつけて作成可能なファイル名を返す
-function GetCreatableFileName([string]$Path, [string]$fileName, [int]$suffix) {
+function GetCreatableFileName {
+    param([string]$Path, [string]$fileName, [int]$suffix)
+    Write-Host("Path=" + $Path)
     $result = $fileName + "-" + $suffix
-    Write-Host $result
+    Write-Host("result=" + $result)
     $filePathName = $Path + "\" + $result
-    if($suffix -eq 1) {
-        return $result
-    }
-    if (Test-Path $filePathName) {
-        return GetCreatableFileName($Path, $fileNmae, ++$suffix)
+    if (Test-Path($filePathName+"."+$filetype)) {
+        return GetCreatableFileName $Path $fileName ($suffix+1)
     } else {
         return $result
     }
 }
 
 
-#Test-Path($CurrentDir+"\"+$SaveImageFile | % { Write-Host $_ }
+#Test-Path($CurrentDir+"\"+$BaseFileName | % { Write-Host $_ }
+#Hoge($CurrentDir)
+#Write-Host($CurrentDir.GetType())
 
-
-$re = GetCreatableFileName($CurrentDir, $SaveImageFile, 1)
-Write-Host $re
-SaveImage($CurrentDir, $re)
-
-pause
+$storeFileName = GetCreatableFileName $CurrentDir $BaseFileName 1
+Write-Host("re=" + $storeFileName)
+SaveImage $CurrentDir ($storeFileName+"."+$filetype)
+#pause
