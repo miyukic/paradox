@@ -4,6 +4,7 @@ Set-StrictMode -Version Latest
 [string]$BaseFileName = 'ImageFile'
 #保存ファイルの拡張子
 [string]$filetype = "png"
+#ショートカットから起動するなら作業フォルダーの位置になる
 [string]$CurrentDir = Convert-Path .
 [string]$DesktopPath = [System.Environment]::GetFolderPath("Desktop")
 
