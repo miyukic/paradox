@@ -1,4 +1,4 @@
-Set-StrictMode -Version Latest
+﻿Set-StrictMode -Version Latest
 
 #基本保存ファイル名
 [string]$BaseFileName = 'ImageFile'

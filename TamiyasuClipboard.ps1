@@ -1,6 +1,11 @@
-#TamiyasuClipboard 1.0
+﻿#TamiyasuClipboard 1.0
 #クリップボードに変更があった時、そのテキストを 民安★TALK で読み上げます
 #民安★TALK のプログラムを設置したフォルダにこのスクリプトも配置してください
+
+#ショートカット作成
+#作業フォルダは下記に設定
+#C:\Windows\System32\WindowsPowerShell\v1.0
+#リンク先はpowershell <本スクリプトの場所>
 
 
 ### 環境設定
