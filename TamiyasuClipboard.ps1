@@ -28,15 +28,18 @@ $cp = [Windows.Forms.Clipboard]
 #コマンドラインオプションを使用するために一旦エイリアスにする
 set-alias tamiyasu $TAMIYASU_PATH
 
+$counter = 0;
+echo "while外"
 while ($true) {
-
-    
+    $counter++
+    echo $counter
 
     if ($cp::ContainsText()) {
         #ClipBoardから取得
         $text = $cp::GetText() 
 
         if (($oldText -ne $text) -and $IsSpeak) {
+            echo "IsSpeak + ${text}"
             tamiyasu $text
             
             $oldText = $text;
