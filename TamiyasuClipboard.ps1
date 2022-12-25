@@ -32,7 +32,7 @@ $counter = 0;
 echo "while外"
 while ($true) {
     $counter++
-    echo $counter
+    #echo $counter
 
     if ($cp::ContainsText()) {
         #ClipBoardから取得
